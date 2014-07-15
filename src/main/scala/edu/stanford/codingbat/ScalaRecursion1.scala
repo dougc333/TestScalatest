@@ -104,7 +104,9 @@ def count7(n:Int):Int = n match{
 //count8(8) → 1
 //count8(818) → 2
 //count8(8818) → 4
-def count8(n:Int):Int = ???
+def count8(n:Int):Int = n match{
+  case _ => if(n<10 && n==8) 1 else if(n<10 && n!=8) 0 else if(n/10 ==8) 1+count8(n/10) else count8(n/10)
+}
 
 
 //Given base and n that are both 1 or more, compute recursively (no loops) the value of base to the n power, so powerN(3, 2) is 9 (3 squared). 
@@ -112,7 +114,10 @@ def count8(n:Int):Int = ???
 //powerN(3, 1) → 3
 //powerN(3, 2) → 9
 //powerN(3, 3) → 27
-def powerN(base:Int, n:Int):Int= ???
+def powerN(base:Int, n:Int):Int= n match{
+  0 => 1
+  _ => base* powerN(base,n-1)
+}
 
 
 //Given a string, compute recursively (no loops) the number of lowercase 'x' chars in the string. 
@@ -120,7 +125,10 @@ def powerN(base:Int, n:Int):Int= ???
 //countX("xxhixx") → 4
 //countX("xhixhix") → 3
 //countX("hi") → 0
-def countX(str:String):Int= ???
+def countX(str:String):Int= {
+  
+  
+}
 
 
 
