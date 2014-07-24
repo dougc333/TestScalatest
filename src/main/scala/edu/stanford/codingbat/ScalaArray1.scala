@@ -8,7 +8,7 @@ package edu.stanford;
 //use split for rotating arrays, don't do a recursive function w/accumulator
 //using vals to hold intermediate state
 //dont need tmp value to hold swap b/c take/drop interface
-class Array1{
+class Array1 {
 	
 //Given an array of ints, return true if 6 appears as either the first or last element in the array. The array will be length 1 or more. 
 
@@ -16,7 +16,7 @@ class Array1{
 //firstLast6({6, 1, 2, 3}) → true
 //firstLast6({13, 6, 1, 2, 3}) → false
   //Scala array supports both length and size, is this true for all scala collection classes? Yes. Is there a correct style answer? 
-def firstLast6(nums:Array[Int]):Boolean ={
+def firstLast6(nums:Array[Int]):Boolean = {
 	if(nums(0)==6 || nums(nums.size-1)==6) true
 	else
 	 false
@@ -30,8 +30,10 @@ def firstLast6(nums:Array[Int]):Boolean ={
 //sameFirstLast({1, 2, 3, 1}) → true
 //sameFirstLast({1, 2, 1}) → true
 // seems like a dumb idiom array(size-1) for the index to get the last element or conversely a(0) to get the first element instead of a(1)
-def sameFirstLast(nums:Array[Int]):Boolean ={
-  if(nums.length>1 && nums[nums(nums.size-1)==nums[0]]) true else false
+def sameFirstLast(nums:Array[Int]):Boolean = {
+  if( nums.length > 1 && nums(nums.size-1)==nums(0) ) true 
+  else 
+    false
 }
 
 
@@ -39,7 +41,7 @@ def sameFirstLast(nums:Array[Int]):Boolean ={
 //Return an int array length 3 containing the first 3 digits of pi, {3, 1, 4}. 
 //makePi() → {3, 1, 4}
 def makePi():Array[Int] ={
-  new Array(3,1,4) 
+  Array(3,1,4) 
 }
 
 
@@ -73,7 +75,7 @@ def sum3(nums:Array[Int]):Int ={
 //rotateLeft3({7, 0, 0}) → {0, 0, 7}
 def rotateLeft3(nums:Array[Int]):Array[Int]= {
   val splitArray = nums.splitAt(2)
-  splitArray(1)+splitArray(0)
+  splitArray._2++splitArray._1
 }
 
 //should be doable w/foldleft also
@@ -89,9 +91,9 @@ def rotate(n:Int, nums:Array[Int]):Array[Int] = {
 //(1,2,3,4,5) rotate left 1: 2,3,4,5,1
 //(1,2,3,4,5) rotate left 2: 3,4,5,1,2
 //(1,2,3,4,5) rotate left 3: 4,5,1,2,3
-def rotateList(n:Int, arr:Array[Int]):Unit =  {
+def rotateList(n:Int, arr:Array[Int]):Array[Int] =  {
   val splitArray = arr.splitAt(n)
-  splitArray(1)++splitArray(0)
+  splitArray._2++splitArray._1
 }
 
 //Given an array of ints length 3, return a new array with the elements in reverse order, so {1, 2, 3} becomes {3, 2, 1}. 
@@ -104,17 +106,27 @@ def reverse3(nums:Array[Int]):Array[Int] ={
 }
 
 
-//Given an array of ints length 3, figure out which is larger between the first and last elements in the array, and set all the other elements to be that value. Return the changed array. 
+//Given an array of ints length 3, figure out which is larger 
+//between the first and last elements in the array, 
+//and set all the other elements to be that value. 
+//Return the changed array. 
 
 //maxEnd3({1, 2, 3}) → {3, 3, 3}
 //maxEnd3({11, 5, 9}) → {11, 11, 11}
-//maxEnd3({2, 11, 3}) → {3, 3, 3
+//maxEnd3({2, 11, 3}) → {3, 3, 3}
 def maxEnd3(nums:Array[Int]):Array[Int]= {
-  if(nums(size-1)>nums(0)) nums.map(nums(size-1)) 
+  if(nums(nums.size-1)>nums(0)) nums.map(x=>nums(nums.size-1)) 
   else 
     nums.map(x=>nums(0))
 }
 
+//maxEnd3({1, 2, 3}) → {3, 3, 3}
+//maxEnd3({11, 5, 9}) → {11, 11, 11}
+//maxEnd3({2, 11, 3}) → {3, 3, 3}
+def maxEnd3Alt(nums:Array[Int]):Array[Int]= {
+ val largest = List(nums(0),nums(nums.size-1)).max
+ nums.map(x=>largest)
+}
 
 //Given an array of ints, return the sum of the first 2 elements in the array. 
 //If the array length is less than 2, just sum up the elements that exist, returning 0 if the array is length 0. 
@@ -133,7 +145,7 @@ def sum2(nums:Array[Int]):Int ={
 //middleWay({7, 7, 7}, {3, 8, 0}) → {7, 8}
 //middleWay({5, 2, 9}, {1, 4, 5}) → {2, 4}
 def middleWay(a:Array[Int], b:Array[Int]):Array[Int] ={
-  a(2)++b(2)
+  Array(a(1),b(1))
 }
 
 
@@ -147,7 +159,7 @@ def middleWay(a:Array[Int], b:Array[Int]):Array[Int] ={
 //makeEnds({1, 2, 3, 4}) → {1, 4}
 //makeEnds({7, 4, 6, 2}) → {7, 2}
 def makeEnds(nums:Array[Int]):Array[Int]= {
-  a(0) ++ a(size-1)
+  Array(nums(0), nums(nums.size-1))
 }
 
 
@@ -158,7 +170,7 @@ def makeEnds(nums:Array[Int]):Array[Int]= {
 //has23({4, 3}) → true
 //has23({4, 5}) → false
 def has23(nums:Array[Int]):Boolean ={
-  nums.contains(x=>x==2) || nums.contains(x=>x==3)
+  nums.contains(2) || nums.contains(3)
 }
 
 
@@ -167,13 +179,15 @@ def has23(nums:Array[Int]):Boolean ={
 //no23({4, 5}) → true
 //no23({4, 2}) → false
 //no23({3, 5}) → false
-def no23(nums:Array[Int]):Boolean ={
-  num.contains(x=>x!=2) && num.contains(x=>x!=3)
+def no23(num:Array[Int]):Boolean ={
+  num.contains(2) && num.contains(3)
 }
 
 
-//Given an int array, return a new array with double the length where its last element is the same as the original array, 
-//and all the other elements are 0. The original array will be length 1 or more. Note: by default, a new int array contains all 0's. 
+//Given an int array, return a new array with double the length where its last element 
+//is the same as the original array, 
+//and all the other elements are 0. The original array will be length 1 or more.
+//Note: by default, a new int array contains all 0's. 
 
 //makeLast({4, 5, 6}) → {0, 0, 0, 0, 0, 6}
 //makeLast({1, 2}) → {0, 0, 0, 2}
@@ -222,7 +236,7 @@ def double23(nums:Array[Int]):Boolean ={
 //fix23({1, 2, 3}) → {1, 2, 0}
 //fix23({2, 3, 5}) → {2, 0, 5}
 //fix23({1, 2, 1}) → {1, 2, 1}
-//can use binary ops to do this?  
+//how to set the elem to a value? 
 def fix23(nums:Array[Int]):Array[Int]= {
   nums.reduceRight((elems,result) =>{})
 }
@@ -249,8 +263,10 @@ def start1(a:Array[Int], b:Array[Int]):Int= {
 //biggerTwo({1, 2}, {3, 4}) → {3, 4}
 //biggerTwo({3, 4}, {1, 2}) → {3, 4}
 //biggerTwo({1, 1}, {1, 2}) → {1, 2}
-public int[] biggerTwo(int[] a, int[] b)= {
-  if((b.sum==a.sum)||(b.sum<a.sum)) a else b 
+def biggerTwo(a:Array[Int], b:Array[Int]):Array[Int] = {
+  if( (b.sum==a.sum) || (b.sum<a.sum)) a 
+  else 
+    b 
 }
 
 
@@ -282,7 +298,7 @@ def plusTwo(a:Array[Int], b:Array[Int]):Array[Int]= {
 //swapEnds({1, 2, 3, 4}) → {4, 2, 3, 1}
 //swapEnds({1, 2, 3}) → {3, 2, 1}
 //swapEnds({8, 6, 7, 9, 5}) → {5, 6, 7, 9, 8}
-public int[] swapEnds(int[] nums)= {
+def swapEnds(nums:Array[Int]):Array[Int]= {
   //val tmp = nums(0) note to self, we dont need a tmp cause of the drop/take api
    nums.takeRight(1)++nums.drop(1).dropRight(1)++nums.take(1)
 }

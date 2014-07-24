@@ -1,8 +1,9 @@
-package edu.stanford.codingbat
+package edu.stanford
 
 class ScalaRecursion1 {
 
- //dont use if/then statements. Use match statements to break up base case and inductive step  
+  
+//dont use if/then statements. Use match statements to break up base case and inductive step  
   
 //Given n of 1 or more, return the factorial of n, which is n * (n-1) * (n-2) ... 1. Compute the result recursively (without loops). 
 
@@ -115,8 +116,8 @@ def count8(n:Int):Int = n match{
 //powerN(3, 2) → 9
 //powerN(3, 3) → 27
 def powerN(base:Int, n:Int):Int= n match{
-  0 => 1
-  _ => base* powerN(base,n-1)
+  case 0 => 1
+  case _ => base* powerN(base,n-1)
 }
 
 
@@ -125,10 +126,7 @@ def powerN(base:Int, n:Int):Int= n match{
 //countX("xxhixx") → 4
 //countX("xhixhix") → 3
 //countX("hi") → 0
-def countX(str:String):Int= {
-  
-  
-}
+def countX(str:String):Int= ???
 
 
 

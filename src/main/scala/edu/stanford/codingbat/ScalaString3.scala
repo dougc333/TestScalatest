@@ -10,9 +10,9 @@ class ScalaString3 {
 //countYZ("fez day") → 2
 //countYZ("day fez") → 2
 //countYZ("day fyyyz") → 2
-public int countYZ(String str) {
-	  
-}
+def countYZ(str:String):Int =  ???
+   
+
 
 
 //Given two strings, base and remove, return a version of the base string 
@@ -23,9 +23,9 @@ public int countYZ(String str) {
 //withoutString("Hello there", "llo") → "He there"
 //withoutString("Hello there", "e") → "Hllo thr"
 //withoutString("Hello there", "x") → "Hello there"
-public String withoutString(String base, String remove) {
+def withoutString(base:String, remove:String):String =  ???
 	  
-}
+
 
 
 //Given a string, return true if the number of appearances of "is" anywhere in the string is equal 
@@ -34,9 +34,9 @@ public String withoutString(String base, String remove) {
 //equalIsNot("This is not") → false
 //equalIsNot("This is notnot") → true
 //equalIsNot("noisxxnotyynotxisi") → true
-public boolean equalIsNot(String str) {
+def equalIsNot(str:String) =  ???
 	  
-}
+
 
 
 //We'll say that a lowercase 'g' in a string is "happy" if there is another 'g' 
@@ -45,9 +45,9 @@ public boolean equalIsNot(String str) {
 //gHappy("xxggxx") → true
 //gHappy("xxgxx") → false
 //gHappy("xxggyygxx") → false
-public boolean gHappy(String str) {
+def gHappy(str:String) =  ???
 	  
-}
+
 
 
 //We'll say that a "triple" in a string is a char appearing three times in a row. 
@@ -56,9 +56,9 @@ public boolean gHappy(String str) {
 //countTriple("abcXXXabc") → 1
 //countTriple("xxxabyyyycd") → 3
 //countTriple("a") → 0
-public int countTriple(String str) {
+def countTriple(str:String):Int =  ???
 	  
-}
+
 
 
 //Given a string, return the sum of the digits 0-9 that appear in the string, 
@@ -69,9 +69,9 @@ public int countTriple(String str) {
 //sumDigits("aa1bc2d3") → 6
 //sumDigits("aa11b33") → 8
 //sumDigits("Chocolate") → 0
-public int sumDigits(String str) {
+def sumDigits(str:String):Int =  ???
 	  
-}
+
 
 
 
@@ -81,9 +81,9 @@ public int sumDigits(String str) {
 //sameEnds("abXYab") → "ab"
 //sameEnds("xx") → "x"
 //sameEnds("xxx") → "x"
-public String sameEnds(String string) {
+def sameEnds(str:String):String =  ???
 	  
-}
+
 
 
 //Given a string, look for a mirror image (backwards) string at both the beginning and end of the given string. 
@@ -94,9 +94,9 @@ public String sameEnds(String string) {
 //mirrorEnds("abXYZba") → "ab"
 //mirrorEnds("abca") → "a"
 //mirrorEnds("aba") → "aba"
-public String mirrorEnds(String string) {
+def mirrorEnds(str:String):String =  ???
 
-}
+
 
 
 //Given a string, return the length of the largest "block" in the string. A block is a run of adjacent chars that are the same. 
@@ -104,9 +104,9 @@ public String mirrorEnds(String string) {
 //maxBlock("hoopla") → 2
 //maxBlock("abbCCCddBBBxx") → 3
 //maxBlock("") → 0
-public int maxBlock(String str) {
+def maxBlock(str:String):Int =  ???
 	  
-}
+
 
 
 //Given a string, return the sum of the numbers appearing in the string, ignoring all other characters. A number is a series of 1 or more digit chars in a row. (Note: Character.isDigit(char) tests if a char is one of the chars '0', '1', .. '9'. Integer.parseInt(string) converts a string to an int.) 
@@ -114,9 +114,9 @@ public int maxBlock(String str) {
 //sumNumbers("abc123xyz") → 123
 //sumNumbers("aa11b33") → 44
 //sumNumbers("7 11") → 18
-public int sumNumbers(String str) {
+def sumNumbers(str:String):Int =  ???
 	  
-}
+
 
 
 
@@ -125,11 +125,8 @@ public int sumNumbers(String str) {
 //notReplace("is test") → "is not test"
 //notReplace("is-is") → "is not-is not"
 //notReplace("This is right") → "This is not right"
-public String notReplace(String str) {
+def notReplace(str:String):String =  ???
 	  
 }
 
-
-
   
-}
