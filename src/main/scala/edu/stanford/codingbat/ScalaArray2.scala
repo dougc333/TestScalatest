@@ -1,5 +1,6 @@
 package edu.stanford;
 
+import scala.math._
 
 class Array2  {
 	
@@ -94,9 +95,16 @@ def lucky13(nums:Array[Int]):Boolean  = {
 //sum28( = {2, 3, 2, 2, 4, 2, 2}) → false
 //sum28( = {1, 2, 3, 4}) → false
 def sum28(nums:Array[Int]):Boolean  = {
-  val numTwos = nums.count(x=>x==2)
-  numTwos*2==8
-  //NOTE TO SELF: do a fold where you have an accumulator and test the accumulator
+  val t = nums.foldLeft(0)(sum)
+  if (t==8) true
+  else
+    false
+}
+
+def sum(res:Int, x:Int)={
+  if(x==2) res+x 
+  else
+    res
 }
 
 
@@ -130,6 +138,25 @@ def fizzArray(n:Int):Array[Int]  = {
   arr
 }
 
+//Given a number n, create and return a new int array of length n, containing the numbers 0, 1, 2, ... n-1. 
+//The given n may be 0, in which case just return a length 0 array. 
+//You do not need a separate if-statement for the length-0 case; 
+//the for-loop should naturally execute 0 times in that case, so it just works. 
+//The syntax to make a new int array is: new int[desired_length]   (See also: FizzBuzz Code) 
+
+//fizzArray(4) →  = {0, 1, 2, 3}
+//fizzArray(1) →  = {0}
+//fizzArray(10) →  = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+def fizzArrayFoldLeft(n:Int):Array[Int]  = {
+  Array[Int]().foldLeft(Array[Int]())(fizzArr)
+}
+
+
+def fizzArr(res:Array[Int],x:Int)={
+  res++Array(x)
+}
+
 
 //Given an array of ints, return true if every element is a 1 or a 4. 
 
@@ -142,18 +169,24 @@ def only14(nums:Array[Int]):Boolean  = {
 
 
 //Given a number n, create and return a new string array of length n, containing the strings "0", "1" "2" .. through n-1. 
-//N may be 0, in which case just return a length 0 array. Note: String.valueOf(xxx) will make the String form of most types. The syntax to make a new string array is: new String[desired_length]  (See also: FizzBuzz Code) 
+//N may be 0, in which case just return a length 0 array. 
+//Note: String.valueOf(xxx) will make the String form of most types. 
+//The syntax to make a new string array is: new String[desired_length]  
+//(See also: FizzBuzz Code) 
 
 //fizzArray2(4) →  = {"0", "1", "2", "3"}
 //fizzArray2(10) →  = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 //fizzArray2(2) →  = {"0", "1"}
-def fizzArray2(n:Int):Array[String]  = {
-  var s = ""
-  for(i<-0 until n)  {
-    s=s+i.toString()
-  }
+//add to array till n=0
+def fizzArray2(n:Int):Array[String] = n match {
+  case 0 =>Array("")
+  case _  => Array(n.toString) ++ fizzArray2(n-1)
 }
 
+def add(res:Array[String],x:Int)={
+  println("res:"+res.size+" x:"+x)
+  res++Array(x.toString())
+}
 
 
 //Given an array of ints, return true if it contains no 1's or it contains no 4's. 
@@ -173,17 +206,12 @@ def no14(nums:Array[Int]):Boolean  = {
 //isEverywhere( = {1, 2, 1, 3}, 2) → false
 //isEverywhere( = {1, 2, 1, 3, 4}, 1) → false
 def isEverywhere(nums:Array[Int], testVal:Int):Boolean  = {
-  true
+  nums.sliding(2).toList.map(x=>(x(0)==testVal || x(1)==testVal)).foldLeft(true)(andListElems)
 }
 
-// create pairs from 1,3 elements, 2,4
-//Array(1,2,3,4,5,6,7)->Array(Array(1,3),Array(2,4),Array(5,7),Array(6))
-//note to self: we zip with tail for pairs, possible to use indexes/position? 
-//ie odd and even positions for pair formation?
-def createPairs(nums:Array[Int])={
-  nums zip nums.tail 
+def andListElems(res:Boolean, x:Boolean)={
+  res && x
 }
-
 
 //Given an array of ints, return true if the array contains a 2 next to a 2 or a 4 next to a 4, but not both. 
 
@@ -210,11 +238,11 @@ def either24(nums:Array[Int]):Boolean ={
 def matchUp(nums1:Array[Int], nums2:Array[Int]):Int  = {
   var count=0
   for(i<-0 until nums1.length)  {
-    if(Math.abs( (nums1(i)-nums2(i))<=2 )) count++ 
-    else Nil
+    if(math.abs(nums1(i)-nums2(i))<=2 ) count+=1 
   }
   count
 }
+
 
 
 //Given an array of ints, return true if the array contains two 7's next to each other, 
@@ -224,8 +252,7 @@ def matchUp(nums1:Array[Int], nums2:Array[Int]):Int  = {
 //has77( = {1, 7, 1, 7}) → true
 //has77( = {1, 7, 1, 1, 7}) → false
 def has77(nums:Array[Int]):Boolean  = {
-  var isTrue=false
-  //dont have functional way to manipulate indexes and position
+  nums.sliding(3).toList.map(x=>(x(0)==7 && x(2)==7)||(x(0)==7&&x(1)==7)||(x(1)==7&&x(2)==7)).contains(true)
 }
 
 
@@ -261,7 +288,7 @@ def haveThree(nums:Array[Int]):Boolean  = {
   //test if exactly 3 threes 
   val numThrees = nums.map(x=>x==3).count(x=>x==true)==3
   //test if no 3s are next to each other. pair, test pair
-  val next = nums.sliding(2).toList.map(x=>(x._1==3 && x._2==3)).contains(true)
+  val next = nums.sliding(2).toList.map(x=>(x(0)==3 && x(1)==3)).contains(true)
   next && numThrees
 }
 
@@ -272,7 +299,6 @@ def haveThree(nums:Array[Int]):Boolean  = {
 //twoTwo( = {2, 2, 4}) → true
 //twoTwo( = {2, 2, 4, 2}) → false
 def twoTwo(nums:Array[Int]):Boolean  = {
-  //how to do conditional?if see 2 need 2 after? separate data structure
   nums.sliding(2).toList.filter(x=>x(0)==2).forall(x=>x(1)==2)
 }
 
@@ -296,7 +322,7 @@ def sameEnds(nums:Array[Int], len:Int):Boolean  = {
 //tripleUp( = {1, 2, 3}) → true
 //tripleUp( = {1, 2, 4}) → false
 def tripleUp(nums:Array[Int]):Boolean  = {
-  nums.sliding(3).toList.map(x=>x(1)==x(0)+1 && x(2)==x(1)++1).contains(true)
+  nums.sliding(3).toList.map(x=>((x(1)==x(0)+1) && (x(2)==x(1)+1))).contains(true)
 }
 
 
@@ -307,11 +333,13 @@ def tripleUp(nums:Array[Int]):Boolean  = {
 //fizzArray3(5, 10) →  = {5, 6, 7, 8, 9}
 //fizzArray3(11, 18) →  = {11, 12, 13, 14, 15, 16, 17}
 //fizzArray3(1, 3) →  = {1, 2}
+//this is wrong when it has a var
 def fizzArray3(start:Int, end:Int):Array[Int]  = {
-   var arr = new Array[Int]
-   for(i<-start to end)  {
+   var arr =  Array[Int]()
+   for(i<-start until end){
      arr=arr++Array(i)
    }
+   arr
 }
 
 
@@ -334,16 +362,14 @@ def shiftLeft(nums:Array[Int]):Array[Int]  = {
 //tenRun( = {10, 1, 20, 2}) →  = {10, 10, 20, 20}
 //tenRun( = {10, 1, 9, 20}) →  = {10, 10, 10, 20}
 def tenRun(nums:Array[Int]):Array[Int]  = {
-  //case class to hold state?
-  var arr= new Array[Int]()
-  boolean seen10=false
-  for(i<-0 to nums.size)  {
-    if(nums(i)%10==0)  {
-      seen10=true
-      //painful; this isnt scalish
-    }else  {
-      arr=arr+nums(i)
-    }
+  nums.foldLeft(Array[Int]())(lookFor10)
+}
+
+def lookFor10(res:Array[Int], x:Int) = {
+  println("res:"+res+" x:"+x)
+  if(x==10){
+    println("found10")
+    res++Array(10)
   }
 }
 
@@ -382,21 +408,27 @@ def post4(nums:Array[Int]):Array[Int]  = {
 //notAlone( = {1, 2, 3}, 2) →  = {1, 3, 3}
 //notAlone( = {1, 2, 3, 2, 5, 2}, 2) →  = {1, 3, 3, 5, 5, 2}
 //notAlone( = {3, 4}, 3) →  = {3, 4}
+//which function returns a new collection? flatMap, map,
 def notAlone(nums:Array[Int], v:Int):Array[Int]  = {
-  
+  nums.sliding(3).map()
 }
 
 
 //Return an array that contains the exact same numbers as the given array, 
 //but rearranged so that all the zeros are grouped at the start of the array. 
-//The order of the non-zero numbers does not matter. So  = {1, 0, 0, 1} becomes  = {0 ,0, 1, 1}. 
+//The order of the non-zero numbers does not matter. So  = {1, 0, 0, 1} 
+//becomes  = {0 ,0, 1, 1}. 
 //You may modify and return the given array or make a new array. 
 
 //zeroFront( = {1, 0, 0, 1}) →  = {0, 0, 1, 1}
 //zeroFront( = {0, 1, 1, 0, 1}) →  = {0, 0, 1, 1, 1}
 //zeroFront( = {1, 0}) →  = {0, 1}
 def zeroFront(nums:Array[Int]):Array[Int]  = {
-    
+  val numZeros = nums.count(x=>x==0)
+  //split into 2 arrays, zero and nonzero then create separate array with zeros array 
+  //first and nonzero appended
+  val appendArray = nums diff Array.fill(numZeros)(0)
+  Array.fill(numZeros)(0) ++ appendArray
 }
 
 
